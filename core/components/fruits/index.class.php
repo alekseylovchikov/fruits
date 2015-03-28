@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Class FruitsMainController
- */
 abstract class FruitsMainController extends modExtraManagerController {
 	/** @var Fruits $Fruits */
 	public $Fruits;
@@ -16,14 +13,15 @@ abstract class FruitsMainController extends modExtraManagerController {
 		require_once $corePath . 'model/fruits/fruits.class.php';
 
 		$this->Fruits = new Fruits($this->modx);
-		$this->addCss($this->Fruits->config['cssUrl'] . 'mgr/main.css');
-		$this->addJavascript($this->Fruits->config['jsUrl'] . 'mgr/fruits.js');
-		$this->addHtml('
-		<script type="text/javascript">
+
+		$this->modx->regClientCSS($this->Fruits->config['cssUrl'] . 'mgr/main.css');
+		$this->modx->regClientStartupScript($this->Fruits->config['jsUrl'] . 'mgr/fruits.js');
+		$this->modx->regClientStartupHTMLBlock('<script type="text/javascript">
+		Ext.onReady(function() {
 			Fruits.config = ' . $this->modx->toJSON($this->Fruits->config) . ';
 			Fruits.config.connector_url = "' . $this->Fruits->config['connectorUrl'] . '";
-		</script>
-		');
+		});
+		</script>');
 
 		parent::initialize();
 	}
