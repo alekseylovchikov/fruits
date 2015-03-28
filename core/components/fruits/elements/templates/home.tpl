@@ -1,0 +1,1 @@
+<div id="fruits-panel-home-div"></div>
