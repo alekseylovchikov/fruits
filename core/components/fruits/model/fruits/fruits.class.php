@@ -1,42 +1,26 @@
 <?php
 
-/**
- * The base class for Fruits.
- */
 class Fruits {
-	/* @var modX $modx */
 	public $modx;
+	public $config = array();
 
-
-	/**
-	 * @param modX $modx
-	 * @param array $config
-	 */
 	function __construct(modX &$modx, array $config = array()) {
 		$this->modx =& $modx;
 
-		$corePath = $this->modx->getOption('fruits_core_path', $config, $this->modx->getOption('core_path') . 'components/fruits/');
-		$assetsUrl = $this->modx->getOption('fruits_assets_url', $config, $this->modx->getOption('assets_url') . 'components/fruits/');
-		$connectorUrl = $assetsUrl . 'connector.php';
+		$basePath = $this -> modx -> getOption('fruits.core_path', $config, $this -> modx -> getOption('core_path') . 'components/fruits/');
+		$assetsUrl = $this -> modx -> getOption('fruits.assets_url', $config, $this -> modx -> getOption('assets_url') . 'components/fruits/');
 
-		$this->config = array_merge(array(
-			'assetsUrl' => $assetsUrl,
-			'cssUrl' => $assetsUrl . 'css/',
+		$this -> config = array_merge(array(
+			'basePath' => $basePath,
+			'corePath' => $basePath,
+			'modelPath' => $basePath . 'model/',
+			'processorPath' => $basePath . 'processors/',
+			'chunksPath' => $basePath . 'elements/chunks/',
 			'jsUrl' => $assetsUrl . 'js/',
-			'imagesUrl' => $assetsUrl . 'images/',
-			'connectorUrl' => $connectorUrl,
-
-			'corePath' => $corePath,
-			'modelPath' => $corePath . 'model/',
-			'chunksPath' => $corePath . 'elements/chunks/',
-			'templatesPath' => $corePath . 'elements/templates/',
-			'chunkSuffix' => '.chunk.tpl',
-			'snippetsPath' => $corePath . 'elements/snippets/',
-			'processorsPath' => $corePath . 'processors/'
+			'cssUrl' => $assetsUrl . 'css/',
+			'assetsUrl' => $assetsUrl,
+			'connectorUrl' => $assetsUrl . 'connector.php'
 		), $config);
-
-		$this->modx->addPackage('fruits', $this->config['modelPath']);
-		$this->modx->lexicon->load('fruits:default');
 	}
 
 }
